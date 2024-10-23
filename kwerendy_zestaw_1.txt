@@ -1,0 +1,21 @@
+Zad 1: 
+
+CREATE TABLE postac (id_postaci int AUTO_INCREMENT,nazwa varchar(40),rodzaj enum('wiking','ptak','kobieta'),data_ur DATE,wiek int,PRIMARY KEY(id_postaci));
+
+INSERT INTO postac VALUES (1,'Bjorn','wiking','1234-10-11',40)
+
+INSERT INTO postac VALUES (2,'Drozd','ptak','2024-10-22',1);
+
+INSERT INTO postac VALUES (3,'Tesciowa','kobieta','1871-01-01',91);
+
+UPDATE postac SET wiek = 88 WHERE nazwa = 'Tesciowa';
+
+Zad2: 
+
+CREATE TABLE walizka (id_walizki int AUTO_INCREMENT,pojemnosc int,kolor enum('rozowy','czerwony','teczowy','zolty'),id_wlasciciela int,PRIMARY KEY(id_walizki),FOREIGN KEY(id_wlasciciela) REFERENCES postac(id_postaci));
+
+ALTER TABLE walizka ALTER rodzaj SET DEFAULT 'rozowy';
+
+INSERT INTO walizka VALUES (1,10,'zolty',1);
+
+INSERT INTO walizka VALUES (2,14,'teczowy',3);
