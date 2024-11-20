@@ -19,3 +19,43 @@ ALTER TABLE walizka ALTER rodzaj SET DEFAULT 'rozowy';
 INSERT INTO walizka VALUES (1,10,'zolty',1);
 
 INSERT INTO walizka VALUES (2,14,'teczowy',3);
+
+Zad3:
+
+CREATE TABLE izba (adres_budynku varchar(30),nazwa_izby varchar(30),metraz int UNSIGNED,wlasciciel int,PRIMARY KEY(adres_budynku,nazwa_izby),FOREIGN KEY(wlasciciel) REFERENCES postac(id_postaci));
+
+ALTER TABLE izba ADD kolor varchar(30) DEFAULT 'czarny';
+
+INSERT INTO izba VALUES('fajna_ulca','spizarnia',50,1,'czerwony');
+
+Zad4:
+
+CREATE TABLE przetwory (id_przetworu int PRIMARY KEY,rok_produkcji YEAR DEFAULT (1654),id_wykonawcy int,zawartosc varchar(30),dodatek varchar(taci),FOREIGN KEY(id_konsumanta) REFERENCES postac(id_postaci)); <- to do poprawy
+
+ INSERT INTO przetwory VALUES(1,DEFAULT,1,'bigos',DEFAULT,3); <- to do poprawy
+
+Zad5: 
+
+INSERT INTO postac VALUES (4,'Andrzej','wiking','1980-02-11',42);
+
+INSERT INTO postac VALUES (5,'Mateusz','wiking','1987-06-11',20);
+
+INSERT INTO postac VALUES (6,'Janusz','wiking','1987-06-11',89);
+
+INSERT INTO postac VALUES (7,'Adam','wiking','1900-01-12',50);
+
+INSERT INTO postac VALUES (8,'Leo','wiking','1760-06-24',30);
+
+CREATE TABLE statek (nazwa_statku varchar(30) PRIMARY KEY,rodzaj_statku enum('fajny','niefajny'),data_wodowania date, max_ladownosc int UNSIGNED);
+
+ALTER TABLE postac ADD fukcja varchar(30);
+
+UPDATE postac SET fukcja='kapitan' WHERE nazwa='Bjorn';
+
+ALTER TABLE postac ADD statek int;
+
+(tu jeszcze dorobić)
+
+DELETE FROM izba WHERE nazwa_izby='spizarnia';
+
+DROP TABLE izba;
