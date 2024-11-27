@@ -1,0 +1,35 @@
+Zad 1 
+
+1) 
+SELECT avg(waga) FROM kreatura WHERE rodaj = 'wiking';
+2)
+SELECT rodzaj,COUNT(rodzaj),AVG(waga) FROM kreatura GROUP BY rodzaj;
+3)
+SELECT DISTINCT rodzaj,AVG(YEAR(dataUr)) FROM kreatura GROUP BY rodzaj;
+
+Zad 2
+
+1)
+SELECT DISTINCT rodzaj,SUM(waga) AS 'suma wagi' FROM zasob GROUP BY rodzaj;
+2)
+SELECT nazwa,SUM(waga*ilosc) FROM zasob WHERE ilosc >= 4 GROUP BY nazwa HAVING SUM(waga*ilosc) > 10;
+3)
+SELECT DISTINCT nazwa FROM zasob GROUP BY nazwa HAVING min(ilosc) > 1;
+
+Zad 3
+
+1)
+SELECT kreatura.nazwa,SUM(ekwipunek.ilosc) FROM kreatura INNER JOIN ekwipunek on ekwipunek.idkreatury = kreatura.idkreatury INNER JOIN zasob ON zasob.idZasobu=ekwipunek.idZasobu GROUP BY kreatura.nazwa;
+2)
+SELECT kreatura.nazwa,GROUP_CONCAT(zasob.nazwa) FROM kreatura INNER JOIN ekwipunek on ekwipunek.idkreatury = kreatura.idkreatury INNER JOIN zasob ON zasob.idZasobu=ekwipunek.idZasobu GROUP BY kreatura.nazwa;
+3)
+SELECT kreatura.nazwa,ekwipunek.idEkwipunku  FROM kreatura LEFT JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury WHERE idEkwipunku IS NULL;
+
+Zad 4
+
+1)
+
+2)
+
+3)
+SELECT GROUP_CONCAT(nazwa,'-') FROM kreatura WHERE idKreatury != 5;
