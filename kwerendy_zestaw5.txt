@@ -1,0 +1,41 @@
+Zad 1
+
+1)
+CREATE TABLE dziekonskim.kreatura AS SELECT * FROM wikingowie.kreatura;
+CREATE TABLE dziekonskim.uczestnicy AS SELECT * FROM wikingowie.uczestnicy;
+CREATE TABLE dziekonskim.etapy AS SELECT * FROM wikingowie.etapy_wyprawy;
+CREATE TABLE dziekonskim.sektor AS SELECT * FROM wikingowie.sektor;
+CREATE TABLE dziekonskim.wyprawa AS SELECT * FROM wikingowie.wyprawa;
+2)
+SELECT kreatura.nazwa FROM kreatura LEFT JOIN uczestnicy ON kreatura.idKreatury = uczestnicy.id_uczestnika WHERE uczestnicy.id_wyprawy IS NULL;
+3)
+SELECT wyprawa.nazwa, SUM(zasob.waga * ekwipunek.ilosc) AS 'loczna waga' FROM wyprawa LEFT JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy LEFT JOIN ekwipunek ON uczestnicy.id_uczestnika=ekwipunek.idKreatury LEFT JOIN
+zasob ON zasob.idZasobu=ekwipunek.idZasobu GROUP BY wyprawa.nazwa;
+
+Zad 2
+
+1)
+SELECT wyprawa.nazwa , GROUP_CONCAT(kreatura.nazwa) AS 'uczestnicy' FROM wyprawa INNER JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy INNER JOIN kreatura ON kreatura.idKreatury=uczestnicy.id_uczestnika GROUP BY wyprawa.nazwa;
+2)
+SELECT etapy.idEtapu,sektor.nazwa,wyprawa.data_rozpoczecia, kreatura.nazwa FROM sektor LEFT JOIN etapy ON etapy.sektor=sektor.id_sektora LEFT JOIN wyprawa ON wyprawa.id_wyprawy=etapy.idWyprawy INNER JOIN kreatura ON kreatura.idKreatury=wyprawa.kierownik WHERE idEtapu IS NOT NULL  ORDER BY wyprawa.data_rozpoczecia, etapy.idEtapu;
+
+
+Zad 3
+
+1) 
+SELECT sektor.nazwa, IFNULL(COUNT(idEtapu),0) AS 'ilosc odwiedzin' FROM sektor LEFT JOIN etapy ON etapy.sektor=sektor.id_sektora GROUP BY sektor.nazwa;
+2)
+SELECT k.nazwa,IF(COUNT(u.id_uczestnika)>0,'bral udzial w wyparwie','nie bral udzialu w wyprawie') AS 'czy bral udzial' FROM kreatura k left join uczestnicy u ON u.id_uczestnika=k.idKreatury GROUP BY k.nazwa;
+
+Zad 4
+
+1)
+SELECT w.nazwa,IFNULL(SUM(CHAR_LENGTH(e.dziennik)),0) AS 'liczba znakow' FROM wyprawa w LEFT JOIN etapy e ON w.id_wyprawy=e.idWyprawy GROUP BY w.nazwa HAVING ifnull(SUM(CHAR_LENGTH(e.dziennik)),0)<400;
+2)
+SELECT w.nazwa , IFNULL(SUM(e.ilosc*z.waga),0) AS 'waga na wyprawe' FROM wyprawa w LEFT JOIN uczestnicy u ON w.id_wyprawy = u.id_wyprawy LEFT JOIN kreatura k ON u.id_uczestnika = k.idKreatury LEFT JOIN ekwipunek e ON k.idKreatury
+= e.idEkwipunku LEFT JOIN zasob z ON e.idZasobu = z.idZasobu GROUP BY w.nazwa;
+
+Zad 5
+
+1)
+select k.nazwa,DATEDIFF(w.data_rozpoczecia,k.dataUr) FROM wyprawa w JOIN uczestnicy u ON w.id_wyprawy = u.id_wyprawy JOIN kreatura k ON u.id_uczestnika = k.idKreatury;
